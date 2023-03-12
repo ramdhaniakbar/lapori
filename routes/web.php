@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Frontsite\LandingController;
+use App\Http\Controllers\Employee\DashboardController;
+use App\Http\Controllers\Frontsite\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,28 +20,26 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 Route::resource('/', LandingController::class);
 
-Route::middleware(['guest'])->group(function () {
+Route::middleware('guest', 'guest:employee')->group(function () {
     // login page
     Route::resource('login', LoginController::class);
     // register page
     Route::resource('register', RegisterController::class);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+Route::middleware(['authGuards'])->group(function () {
+    
+    Route::group(['prefix' => 'backsite', 'as' => 'backsite.', 'middleware' => ['employee_or_admin']], function () {
+        
+        // dashboard
+        Route::resource('dashboard', DashboardController::class);
+
+    });
+    
+    // report
+    Route::get('laporan_kamu', [ReportController::class, 'your_report'])->name('laporan_kamu');
     Route::resource('lapor', ReportController::class);
     
     // logout
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
-
-// Route::get('/', function () {
-//     return view('pages.index');
-// });
-
-// Route::get('/login', function () {
-//     return view('pages.auth.login');
-// });
-
-// Route::get('/register', function () {
-//     return view('pages.auth.register');
-// });

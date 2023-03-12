@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title_report');
             $table->longText('body_report');
             $table->date('incident_date');
+            $table->longText('location_incident');
+            $table->longText('report_image')->nullable();
             $table->enum('status', ['pending', 'ditolak', 'proses', 'selesai'])->default('pending');
             $table->timestamps();
             $table->softDeletes();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Report;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +23,7 @@ class Response extends Model
     ];
 
     protected $fillable = [
-        'user_id',
+        'employee_id',
         'report_id',
         'body_response',
         'response_date',
@@ -36,9 +37,9 @@ class Response extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(): BelongsTo
+    public function employee(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
     }
 
     /**

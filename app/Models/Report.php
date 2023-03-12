@@ -31,6 +31,8 @@ class Report extends Model
         'title_report',
         'body_report',
         'incident_date',
+        'location_incident',
+        'report_image',
         'status',
         'created_at',
         'updated_at',
@@ -44,7 +46,7 @@ class Report extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withDefault();
     }
 
     /**
@@ -65,25 +67,5 @@ class Report extends Model
     public function responses(): HasMany
     {
         return $this->hasMany(Response::class, 'report_id');
-    }
-
-    /**
-     * Get the likes that owns the Report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function likes(): HasMany
-    {
-        return $this->hasMany(Like::class, 'report_id');
-    }
-
-    /**
-     * Get the comments that owns the Report
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class, 'report_id');
     }
 }

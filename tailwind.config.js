@@ -20,7 +20,10 @@ module.exports = {
             "title-color": "#3F3D56",
             "paragraph-color": "#BFB8C2",
             "input-color": "#DFE1F4",
-            "red-color": "#FF2222",
+            "red-color": "#F43F5E",
+            "green-color": "#C5F8B7",
+            "blue-color": "#38BDF8",
+            "yellow-color": "#FCD34D",
         },
         fontSize: {
             title: "3.563rem",

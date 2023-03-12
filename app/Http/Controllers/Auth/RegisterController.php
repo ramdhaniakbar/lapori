@@ -44,20 +44,10 @@ class RegisterController extends Controller
         // store to database
         $user = User::create($data);
 
-        $user->remember_token = $user->createToken('auth_token')->plainTextToken;
-        $user->save();
-
-        // sync role by users select
-        // $user->role()->sync($request->input('role', []));
-
-        // save to detail user , to set type user
-        $detail_user = new DetailUser;
-        $detail_user->user_id = $user['id'];
-        $detail_user->save();
-
+        // auth user
         Auth::login($user);
 
-        return redirect()->route('index');
+        return redirect()->route('login.index');
     }
 
     /**

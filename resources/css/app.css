@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~toastr/toastr.scss";
+
 @font-face {
     font-family: "Plus Jakarta Sans";
     src: url("assets/fonts/PlusJakartaSans-Regular.ttf");

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\User\LoginUserRequest;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -36,17 +38,39 @@ class LoginController extends Controller
     {
         // get all request from frontsite
         $data = $request->all();
+        
+        $user = User::where('email', $data['email'])->first();
+        // $employee = Employee::where('email', $data['email'])->first();
+        // dd($user);
 
-        // check user & password
-        if (!Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        if ($user && Hash::check($data['password'], $user->password)) {
+            $request->session()->regenerate();
+
+            Session::put('guard', 'web');
+            
+            Auth::login($user);
+
+            toastr()->success('Login berhasil!');
+
+            return redirect()->route('index');
+        }
+
+        if (Auth::guard('employee')->attempt(['email' => $data['email'], 'password' => $data['password']], $request->has('remember') ? true : false)) {
+            $request->session()->regenerate();
+
+            Session::put('guard', 'employee');
+
+            toastr()->success('Login berhasil!');
+            
+            return redirect()->intended(route('backsite.dashboard.index'));
+
+        } else {
+
             return back()->withErrors([
                 'email' => 'The provided credentials do not match our records.',
             ])->onlyInput('email');
-        }
-        
-        $request->session()->regenerate();
 
-        return redirect()->intended('/');
+        }
     }
 
     /**

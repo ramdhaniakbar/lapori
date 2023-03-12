@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->index('fk_responses_to_users');
+            $table->foreignId('employee_id')->nullable()->index('fk_responses_to_employees');
             $table->foreignId('report_id')->nullable()->index('fk_responses_to_reports');
             $table->longText('body_response');
             $table->date('response_date');

@@ -6,17 +6,12 @@ namespace App\Models;
 use App\Models\Like;
 use App\Models\Report;
 use App\Models\Comment;
-use App\Models\Response;
-use App\Models\RoleUser;
-use App\Models\DetailUser;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -28,9 +23,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nik',
         'name',
         'email',
         'password',
+        'phone',
     ];
 
     /**
@@ -53,26 +50,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The role that belong to the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function role(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    /**
-     * Get the detail_user associated with the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function detail_user(): HasOne
-    {
-        return $this->hasOne(DetailUser::class, 'user_id');
-    }
-
-    /**
      * Get all of the reports for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -80,45 +57,5 @@ class User extends Authenticatable
     public function reports(): HasMany
     {
         return $this->hasMany(Report::class, 'user_id');
-    }
-
-    /**
-     * Get all of the responses for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function responses(): HasMany
-    {
-        return $this->hasMany(Response::class, 'user_id');
-    }
-
-    /**
-     * Get all of the role_user for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function role_user(): HasMany
-    {
-        return $this->hasMany(RoleUser::class, 'user_id');
-    }
-
-    /**
-     * Get all of the likes for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function likes(): HasMany
-    {
-        return $this->hasMany(Like::class, 'user_id');
-    }
-    
-    /**
-     * Get all of the comments for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class, 'user_id');
     }
 }
