@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Report;
+namespace App\Http\Requests\ReportCategory;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateReportRequest extends FormRequest
+class UpdateReportCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +23,7 @@ class UpdateReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title_report' => ['required', 'string', 'max:255'],
-            'body_report' => ['required', 'string'],
-            'incident_date' => ['required', 'date'],
-            'location_incident' => ['required', 'string'],
-            'report_image' => ['required', 'image', 'max:2048', 'mimes:jpg,png'],
+            'name' => ['required', 'string', 'max:255', Rule::unique('report_categories')->ignore($this->report_categories)]
         ];
     }
 }

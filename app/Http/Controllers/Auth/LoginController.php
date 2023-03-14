@@ -39,8 +39,6 @@ class LoginController extends Controller
         $data = $request->all();
         
         $user = User::where('email', $data['email'])->first();
-        // $employee = Employee::where('email', $data['email'])->first();
-        // dd($user);
 
         if ($user && Hash::check($data['password'], $user->password)) {
             $request->session()->regenerate();
