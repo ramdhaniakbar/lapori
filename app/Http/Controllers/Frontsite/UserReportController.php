@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontsite;
 use Carbon\Carbon;
 use App\Models\Report;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Models\ReportCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Report\StoreReportRequest;
 use App\Http\Requests\Report\UpdateReportRequest;
 
-class ReportController extends Controller
+class UserReportController extends Controller
 {
     public function __construct()
     {
@@ -59,7 +58,7 @@ class ReportController extends Controller
         }
 
         $report = Report::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => Auth::guard(session('guard'))->user()->id,
             'report_category_id' => $request->report_category_id,
             'title_report' => $data['title_report'],
             'body_report' => $data['body_report'],
@@ -137,7 +136,7 @@ class ReportController extends Controller
 
         $lapor->delete();
 
-        toastr()->error('Laporan telah dihapus!');
+        toastr()->success('Laporan telah dihapus!');
 
         return redirect()->route('laporan_kamu');
     }

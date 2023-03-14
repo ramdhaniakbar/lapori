@@ -77,7 +77,6 @@
    @endauth
 </nav>
 
-@section('scripts')
 <script>
    function logoutForm() {
       Swal.fire({
@@ -95,4 +94,3 @@
       }) 
    }
 </script>
-@endsection

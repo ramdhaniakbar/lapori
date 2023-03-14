@@ -16,9 +16,8 @@
 
    @yield('content')
 
-   @include('includes.frontsite.script')
-
    @yield('scripts')
+   @include('includes.frontsite.script')
 </body>
 
 </html>

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\User\LoginUserRequest;
-use App\Models\Employee;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller

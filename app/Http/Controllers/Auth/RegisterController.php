@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\StoreUserRequest;
 
 class RegisterController extends Controller
@@ -43,6 +44,9 @@ class RegisterController extends Controller
 
         // store to database
         $user = User::create($data);
+
+        // put the session
+        Session::put('guard', 'web');
 
         // auth user
         Auth::login($user);
