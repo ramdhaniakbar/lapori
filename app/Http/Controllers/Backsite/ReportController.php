@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Backsite;
 
-use App\Http\Controllers\Controller;
 use App\Models\Report;
+use App\Models\Response;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Response\StoreResponseRequest;
 
 class ReportController extends Controller
 {
@@ -12,9 +16,9 @@ class ReportController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $pengaduans = Report::all();
-        return view('pages.backsite.operational.pengaduan.index', compact('pengaduans'));
+    {;
+        $reports = Report::latest()->get();
+        return view('pages.backsite.operational.pengaduan.index', compact('reports'));
     }
 
     /**
@@ -28,17 +32,24 @@ class ReportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreResponseRequest $request)
     {
-        return abort(404);
+        return Auth::guard(session('guard'))->user()->role;
+
+        $data = $request->all();
+
+        $response = Response::create([
+            'employee_id' => Auth::guard(session('guard'))->user()->id,
+            
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Report $pengaduan): View
     {
-        return abort(404);
+        return view('pages.backsite.operational.pengaduan.show', compact('pengaduan'));
     }
 
     /**

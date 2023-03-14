@@ -62,27 +62,69 @@
                             <div class="card-content collapse hide">
                                 <div class="card-body card-dashboard">
 
-                                    <form class="form form-horizontal" action="" method="POST"
-                                        enctype="multipart/form-data">
+                                    <form class="form form-horizontal" action="{{ route('backsite.tanggapan.store') }}"
+                                        method="POST">
 
                                         @csrf
 
                                         <div class="form-body">
                                             <div class="form-section">
-                                                <p>Please complete the input <code>required</code>, before you click the
-                                                    submit button.</p>
+                                                <p>Harap lengkapi input yang <code>required</code>, sebelum Anda
+                                                    mengklik tombol
+                                                    kirim.</p>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label class="col-md-3 label-control" for="title">Role <code
-                                                        style="color:red;">required</code></label>
+                                                <label class="col-md-3 label-control" for="body_response">Isi
+                                                    Tanggapan<code style="color:red;">required</code></label>
                                                 <div class="col-md-9 mx-auto">
-                                                    <input type="text" id="title" name="title" class="form-control"
-                                                        placeholder="example admin or users" value="{{old('title')}}"
-                                                        autocomplete="off" required>
 
-                                                    @if($errors->has('title'))
-                                                    <p style="font-style: bold; color: red;">{{ $errors->first('title')
+                                                    <textarea name="body_response" id="body_response" cols="30"
+                                                        rows="10" class="form-control"
+                                                        placeholder="contoh Baik, akan kami diskusikan"
+                                                        autocomplete="off"
+                                                        required>{{ old('body_response') }}</textarea>
+
+                                                    @if($errors->has('body_response'))
+                                                    <p style="font-style: bold; color: red;">{{
+                                                        $errors->first('body_response')
+                                                        }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="response_date">Tanggal
+                                                    Tanggapan<code style="color:red;">required</code></label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <input type="date" id="response_date" name="response_date"
+                                                        class="form-control" placeholder="example admin or users"
+                                                        value="{{old('response_date')}}" autocomplete="off" required>
+
+                                                    @if($errors->has('response_date'))
+                                                    <p style="font-style: bold; color: red;">{{
+                                                        $errors->first('response_date')
+                                                        }}</p>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-md-3 label-control" for="response_date">Ke
+                                                    Pengaduan<code style="color:red;">required</code></label>
+                                                <div class="col-md-9 mx-auto">
+                                                    <select name="report_id" id="report_id" class="form-control">
+                                                        <option selected disabled>Pilih Pengaduan</option>
+                                                        @foreach ($reports as $key => $report)
+                                                        <option value="{{ $report->id }}">{{ $report->user->email }} -
+                                                            {{
+                                                            $report->title_report }}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    @if($errors->has('response_date'))
+                                                    <p style="font-style: bold; color: red;">{{
+                                                        $errors->first('response_date')
                                                         }}</p>
                                                     @endif
                                                 </div>
@@ -143,13 +185,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @forelse($pengaduans as $key => $pengaduan)
-                                                <tr data-entry-id="{{ $pengaduan->id }}">
-                                                    <td>{{ $pengaduan->title_report }}</td>
-                                                    <td>{{ $pengaduan->body_report }}</td>
-                                                    <td>{{ $pengaduan->location_incident }}</td>
-                                                    <td>{{ $pengaduan->status }}</td>
-                                                    <td>{{ $pengaduan->incident_date }}</td>
+                                                @forelse($reports as $key => $report)
+                                                <tr data-entry-id="{{ $report->id }}">
+                                                    <td>{{ $report->title_report }}</td>
+                                                    <td>{{ Str::limit($report->body_report, 60, '...') }}</td>
+                                                    <td>{{ $report->location_incident }}</td>
+                                                    <td>{{ $report->status }}</td>
+                                                    <td>{{ date('d-m-Y', strtotime($report->incident_date)) }}</td>
                                                     <td class="text-center">
 
                                                         <div class="btn-group mr-1 mb-1">
@@ -158,13 +200,11 @@
                                                                 data-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">Action</button>
                                                             <div class="dropdown-menu">
-                                                                <a href="#mymodal" data-remote="" data-toggle="modal"
-                                                                    data-target="#mymodal" data-title="Role Detail"
-                                                                    class="dropdown-item">
+                                                                <a href="#mymodal"
+                                                                    data-remote="{{ route('backsite.pengaduan.show', $report->id) }}"
+                                                                    data-toggle="modal" data-target="#mymodal"
+                                                                    data-title="Detail Pengaduan" class="dropdown-item">
                                                                     Show
-                                                                </a>
-                                                                <a class="dropdown-item" href="">
-                                                                    Edit
                                                                 </a>
 
                                                                 <form action="" method="POST"
@@ -173,7 +213,7 @@
                                                                     <input type="hidden" name="_token"
                                                                         value="{{ csrf_token() }}">
                                                                     <input type="submit" class="dropdown-item"
-                                                                        value="Delete">
+                                                                        value="Tolak">
                                                                 </form>
 
                                                             </div>
@@ -227,7 +267,7 @@
          "order": [],
          "paging": true,
          "lengthMenu": [ [5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'All'] ],
-         "pageLength": 10
+         "pageLength": 25
       });
 </script>
 

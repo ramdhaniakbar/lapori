@@ -23,7 +23,23 @@ class EmployeeSeeder extends Seeder
                 'role' => 'admin',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ]
+            ],
+            [
+                'name' => 'John Doe',
+                'email' => 'john@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'employee',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Jane Dunn',
+                'email' => 'jane@gmail.com',
+                'password' => Hash::make('12345678'),
+                'role' => 'employee',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ];
 
         Employee::insert($employee);

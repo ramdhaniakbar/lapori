@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Like;
 use App\Models\User;
-use App\Models\Comment;
 use App\Models\Response;
 use App\Models\ReportCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -62,10 +60,10 @@ class Report extends Model
     /**
      * Get all of the responses for the Report
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function responses(): HasMany
+    public function responses(): HasOne
     {
-        return $this->hasMany(Response::class, 'report_id');
+        return $this->hasOne(Response::class, 'report_id');
     }
 }
