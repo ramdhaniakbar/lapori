@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backsite;
 
 use App\Http\Controllers\Controller;
+use App\Models\Report;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -12,7 +13,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return abort(404);
+        $pengaduans = Report::all();
+        return view('pages.backsite.operational.pengaduan.index', compact('pengaduans'));
     }
 
     /**

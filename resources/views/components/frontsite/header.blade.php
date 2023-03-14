@@ -55,8 +55,13 @@
             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
             <a href="#" class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray" role="menuitem"
                tabindex="-1" id="user-menu-item-0">Profile Kamu</a>
+            @if (Session::get('guard') == 'web')
             <a href="{{ route('laporan_kamu') }}" class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray"
-               role="menuitem" tabindex="-1" id="user-menu-item-0">Laporan Kamu</a>
+            role="menuitem" tabindex="-1" id="user-menu-item-0">Laporan Kamu</a>
+            @else
+            <a href="{{ route('backsite.dashboard.index') }}" class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray"
+            role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
+            @endif
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); logoutForm();"
                class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray" role="menuitem" tabindex="-1"
                id="user-menu-item-2">
@@ -69,11 +74,6 @@
          </div>
       </div>
    </div>
-   {{-- <form action="{{ route('logout') }}" method="POST">
-      @csrf
-      <button type="submit" class="px-5 py-2.5 bg-black-color text-white-color font-semibold rounded-full">Log
-         out</button>
-   </form> --}}
    @endauth
 </nav>
 

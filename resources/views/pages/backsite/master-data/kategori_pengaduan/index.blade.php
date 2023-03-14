@@ -1,8 +1,9 @@
 @extends('layouts.dashboard') 
 
-@section('title', 'User Management')
+@section('title', 'Kategori Pengaduan')
     
 @section('content')
+<!-- BEGIN: Content -->
 <div class="app-content content">
    <div class="content-overlay"></div>
    <div class="content-wrapper">
