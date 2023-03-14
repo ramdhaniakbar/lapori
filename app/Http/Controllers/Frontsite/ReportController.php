@@ -16,6 +16,11 @@ use App\Http\Requests\Report\UpdateReportRequest;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['checkUser']);
+    }
+
     /**
      * Display a listing of the resource.
      */

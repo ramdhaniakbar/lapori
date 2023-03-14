@@ -18,6 +18,7 @@
 
    @include('includes.frontsite.script')
 
+   @yield('scripts')
 </body>
 
 </html>

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Backsite\DashboardController;
 use App\Http\Controllers\Frontsite\LandingController;
-use App\Http\Controllers\Employee\DashboardController;
 use App\Http\Controllers\Frontsite\ReportController;
 
 /*
@@ -33,7 +33,7 @@ Route::middleware(['authGuards'])->group(function () {
         
         // dashboard
         Route::resource('dashboard', DashboardController::class);
-
+                
     });
     
     // report

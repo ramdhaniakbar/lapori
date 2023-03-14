@@ -40,7 +40,7 @@
                      <img src="{{ asset('assets/frontsite/images/edit.svg') }}" alt="">
                   </a>
                   <a href="{{ route('lapor.destroy', $report->id) }}"
-                     onclick="event.preventDefault(); document.getElementById('delete-report').submit();"
+                     onclick="event.preventDefault(); removeData('{{ $report->id }}');"
                      class="p-2 bg-black-color rounded-lg">
                      <img src="{{ asset('assets/frontsite/images/delete.svg') }}" alt="">
                   </a>
@@ -102,4 +102,24 @@
 
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+   function removeData(id) {
+      Swal.fire({
+         title: 'Hapus data',
+         text: "Anda akan menghapus data!",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         cancelButtonText: 'Batal!'
+      }).then((result) => {
+         if (result.isConfirmed) {
+            document.getElementById('delete-report').submit()
+         }
+      }) 
+   }
+</script>
 @endsection

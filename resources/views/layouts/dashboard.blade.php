@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="loading" lang="en" data-textdirection="ltr">
 
 <head>
-   @include('includes.frontsite.meta')
+   @include('includes.backsite.meta')
 
-   <title>@yield('title') | Dashboard</title>
+   <title>@yield('title') | Meet Doctor Backoffice</title>
+
+   <link rel="apple-touch-icon" href="{{ asset('/assets/backsite/app-assets/images/ico/apple-icon-120.png') }}">
+   <link rel="shortcut icon" type="image/x-icon"
+      href="{{ asset('/assets/backsite/app-assets/images/ico/favicon.ico') }}">
 
 
-   @include('includes.frontsite.style')
+   @stack('before-style')
+   @include('includes.backsite.style')
+   @stack('after-style')
 </head>
 
-<body>
-
+<body class="vertical-layout vertical-menu 2-columns fixed-navbar" data-open="click" data-menu="vertical-menu"
+   data-col="2-columns">
+   @include('sweetalert::alert')
+   @include('components.backsite.header')
+   @include('components.backsite.menu')
    @yield('content')
+   @include('components.backsite.footer')
 
-   @include('includes.frontsite.script')
+   @stack('before-script')
+   @include('includes.backsite.script')
+   @stack('after-script')
 
 </body>
 

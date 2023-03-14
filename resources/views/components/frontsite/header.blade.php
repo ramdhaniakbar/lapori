@@ -57,8 +57,7 @@
                tabindex="-1" id="user-menu-item-0">Profile Kamu</a>
             <a href="{{ route('laporan_kamu') }}" class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray"
                role="menuitem" tabindex="-1" id="user-menu-item-0">Laporan Kamu</a>
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+            <a href="{{ route('logout') }}" onclick="event.preventDefault(); logoutForm();"
                class="block px-4 py-2 text-sm text-black-color hover:bg-light-gray" role="menuitem" tabindex="-1"
                id="user-menu-item-2">
                Sign out
@@ -77,3 +76,23 @@
    </form> --}}
    @endauth
 </nav>
+
+@section('scripts')
+<script>
+   function logoutForm() {
+      Swal.fire({
+         title: 'Sign out',
+         text: "Anda akan keluar?",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         cancelButtonText: 'Batal!'
+      }).then((result) => {
+         if (result.isConfirmed) {
+            document.getElementById('logout-form').submit()
+         }
+      }) 
+   }
+</script>
+@endsection
